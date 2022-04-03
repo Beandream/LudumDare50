@@ -1,23 +1,13 @@
 import { Setup } from "./config.js";
-const game = Setup(preload, create, update)
+import { Player } from "./player.js";
+import { Preload } from "./preload.js";
 
 
-function preload() {
-    this.load.setBaseURL(
-        "https://raw.githubusercontent.com/photonstorm/phaser3-examples/master/public/"
-    );
-    this.load.image('sky', 'src/games/firstgame/assets/sky.png');
-    this.load.image('ground', 'src/games/firstgame/assets/platform.png');
-    this.load.image('star', 'src/games/firstgame/assets/star.png');
-    this.load.image('bomb', 'src/games/firstgame/assets/bomb.png');
-    this.load.spritesheet('dude',
-        'src/games/firstgame/assets/dude.png',
-        { frameWidth: 32, frameHeight: 48 }
-    );
-}
+const game = Setup(Preload, create, update)
 
-var platforms, player, cursors, stars, score = 0, scoreText, bombs, gameOver;
-const globalGravity = 3200;
+const player = new Player();
+
+var platforms, cursors, stars, score = 0, scoreText, bombs, gameOver;
 
 function create() {
     cursors = this.input.keyboard.createCursorKeys();
@@ -32,33 +22,10 @@ function create() {
     platforms.create(50, 250, 'ground');
     platforms.create(750, 220, 'ground');
 
-    player = this.physics.add.sprite(100, 450, 'dude');
+    player.create(this, 100, 450, {gravity: 3200});
 
-    player.setBounce(0.1);
-    player.setCollideWorldBounds(true);
-    player.body.setGravityY(300)
+    this.physics.add.collider(player.sprite, platforms);
 
-    this.physics.add.collider(player, platforms);
-
-    this.anims.create({
-        key: 'left',
-        frames: this.anims.generateFrameNumbers('dude', { start: 0, end: 3 }),
-        frameRate: 10,
-        repeat: -1
-    });
-
-    this.anims.create({
-        key: 'turn',
-        frames: [{ key: 'dude', frame: 4 }],
-        frameRate: 20
-    });
-
-    this.anims.create({
-        key: 'right',
-        frames: this.anims.generateFrameNumbers('dude', { start: 5, end: 8 }),
-        frameRate: 10,
-        repeat: -1
-    });
 
     stars = this.physics.add.group({
         key: 'star',
@@ -73,7 +40,7 @@ function create() {
     });
 
     this.physics.add.collider(stars, platforms);
-    this.physics.add.overlap(player, stars, collectStar, null, this);
+    this.physics.add.overlap(player.sprite, stars, collectStar, null, this);
 
     function collectStar(player, star) {
         star.disableBody(true, true);
@@ -113,7 +80,7 @@ function create() {
 
     this.physics.add.collider(bombs, platforms);
 
-    this.physics.add.collider(player, bombs, hitBomb, null, this);
+    this.physics.add.collider(player.sprite, bombs, hitBomb, null, this);
 
     function hitBomb(player, bomb) {
         this.physics.pause();
@@ -127,28 +94,5 @@ function create() {
 }
 
 function update() {
-    if (cursors.left.isDown) {
-        player.setVelocityX(-360);
-
-        player.anims.play('left', true);
-    }
-    else if (cursors.right.isDown) {
-        player.setVelocityX(360);
-
-        player.anims.play('right', true);
-    }
-    else {
-        player.setVelocityX(0);
-
-        player.anims.play('turn');
-    }
-
-    if (cursors.up.isDown) {
-        if (player.body.touching.down) {
-            player.setVelocityY(-1000);
-        }
-        player.body.gravity.y = globalGravity - 3200;
-    } else {
-        player.body.gravity.y = globalGravity;
-    }
+    player.update(cursors);
 }
