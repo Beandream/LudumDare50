@@ -1,30 +1,35 @@
 import { Setup } from "./config.js";
-import { Player } from "./player.js";
 import { Preload } from "./preload.js";
+import { Player } from "./player.js";
+import { Platforms } from "./platforms.js";
 
 
 const game = Setup(Preload, create, update)
 
 const player = new Player();
+const platforms = new Platforms();
 
-var platforms, cursors, stars, score = 0, scoreText, bombs, gameOver;
+var stars, score = 0, scoreText, bombs, gameOver;
 
 function create() {
-    cursors = this.input.keyboard.createCursorKeys();
+    const cursors = this.input.keyboard.createCursorKeys();
 
-    this.add.image(400, 300, 'sky');
+    let sky = this.add.image(400, 300, 'sky').setInteractive();
 
-    platforms = this.physics.add.staticGroup();
+    platforms.init(this, cursors, "platforms");
+    platforms.create(400, 568, { scale: 2 });
+    platforms.create(600, 400);
+    platforms.create(50, 250);
+    platforms.create(750, 220);
 
-    platforms.create(400, 568, 'ground').setScale(2).refreshBody();
+    sky.on('pointerdown', function (pointer) {
+        platforms.create(pointer.x, pointer.y);
+    }, this);
 
-    platforms.create(600, 400, 'ground');
-    platforms.create(50, 250, 'ground');
-    platforms.create(750, 220, 'ground');
+    player.init(this, cursors, "player");
+    player.create(100, 450, { gravity: 3200 });
 
-    player.create(this, 100, 450, {gravity: 3200});
-
-    this.physics.add.collider(player.sprite, platforms);
+    this.physics.add.collider(player.sprite, platforms.sprites);
 
 
     stars = this.physics.add.group({
@@ -39,7 +44,7 @@ function create() {
 
     });
 
-    this.physics.add.collider(stars, platforms);
+    this.physics.add.collider(stars, platforms.sprites);
     this.physics.add.overlap(player.sprite, stars, collectStar, null, this);
 
     function collectStar(player, star) {
@@ -78,7 +83,7 @@ function create() {
 
     bombs = this.physics.add.group();
 
-    this.physics.add.collider(bombs, platforms);
+    this.physics.add.collider(bombs, platforms.sprites);
 
     this.physics.add.collider(player.sprite, bombs, hitBomb, null, this);
 
@@ -94,5 +99,5 @@ function create() {
 }
 
 function update() {
-    player.update(cursors);
+    player.update();
 }
