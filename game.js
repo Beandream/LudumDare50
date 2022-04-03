@@ -22,8 +22,14 @@ function create() {
     platforms.create(50, 250);
     platforms.create(750, 220);
 
-    sky.on('pointerdown', function (pointer) {
-        platforms.create(pointer.x, pointer.y);
+    sky.on('pointerup', function (pointer) {
+        console.log(pointer);
+        let size = Math.abs(pointer.downX - pointer.upX);
+        size = size / 100;
+        if (size < 0.1) size = 0.1;
+
+        platforms.create(pointer.x, pointer.y, { scale: size });
+
     }, this);
 
     player.init(this, cursors, "player");
