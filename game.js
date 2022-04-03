@@ -1,30 +1,6 @@
-const config = {
-    type: Phaser.AUTO,
-    parent: "gameDiv",
-    scale: {
-        // mode: Phaser.Scale.FIT,
-        autoCenter: Phaser.Scale.CENTER_BOTH,
-        width: 800,
-        height: 600,
-    },
-    physics: {
-        default: "arcade",
-        arcade: {
-            debug: false,
-            gravity: { y: 1600 },
-        },
-    },
-    backgroundColor: "#4488aa",
-    scene: [
-        {
-            preload: preload,
-            create: create,
-            update: update,
-        }
-    ],
-}
+import { Setup } from "./config.js";
+const game = Setup(preload, create, update)
 
-const game = new Phaser.Game(config);
 
 function preload() {
     this.load.setBaseURL(
@@ -41,6 +17,7 @@ function preload() {
 }
 
 var platforms, player, cursors, stars, score = 0, scoreText, bombs, gameOver;
+const globalGravity = 3200;
 
 function create() {
     cursors = this.input.keyboard.createCursorKeys();
@@ -105,7 +82,7 @@ function create() {
     scoreText = this.add.text(16, 16, 'score: 0', { fontSize: '32px', fill: '#000' });
 
 
-    function collectStar(player, star) {
+    function collectStar(p, star) {
         star.disableBody(true, true);
 
         score += 10;
@@ -122,7 +99,7 @@ function create() {
 
             });
 
-            var x = (player.x < 400) ? Phaser.Math.Between(400, 800) : Phaser.Math.Between(0, 400);
+            var x = (p.x < 400) ? Phaser.Math.Between(400, 800) : Phaser.Math.Between(0, 400);
 
             var bomb = bombs.create(x, 16, 'bomb');
             bomb.setBounce(1);
@@ -166,7 +143,12 @@ function update() {
         player.anims.play('turn');
     }
 
-    if (cursors.up.isDown && player.body.touching.down) {
-        player.setVelocityY(-1000);
+    if (cursors.up.isDown) {
+        if (player.body.touching.down) {
+            player.setVelocityY(-1000);
+        }
+        player.body.gravity.y = globalGravity - 3200;
+    } else {
+        player.body.gravity.y = globalGravity;
     }
 }
