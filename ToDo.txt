@@ -1,5 +1,74 @@
 Theme: Delay the inevitable
 
+The Idea - RainStorm:
+
+    Start at a lower tutorial section.
+    collect materials to build up to higher level scaffolding that has more resources.
+
+    Find materials in floating islands or other structures.
+    going left or rigt give more resouces going up is safer.
+
+    the higher you go up the less resouces there are.
+    eventually getting impossible to build new structures.
+
+    items will float in the water. so staying near the water is beneficial until it starts raining.
+
+    inventory just based on weight?
+    that way crafting doesn't make you drop items it all weighs the same.
+
+    Maybe hunger?
+    thirst?
+    dampness? keep out of rain under cover?
+    sanity?. keep in the light.
+
+    Craftable scaffolding:
+        Tall Platform up with ladder.
+        Wide Platform off to the side.
+        Square Platform up or to side with crafting table and roof.
+
+    craftable materials:
+        nails from metal scraps
+        planks from logs.
+        sticks from plants.
+        rope from something.
+
+    craftable Items:
+        spyglass:
+            moves your camera off towards the direction you use the spyglass.
+        grappling hook:
+            makes moving around easier and faster.
+        Weather radio thing?:
+            tell you when it will raind and roughly how much rain?
+        Torches?:
+            to light up platforms to keep sanity? and also to see.
+        campfire:
+            for healing and drying off if wet. also works as light.
+        
+    Example level:
+                _
+               | |
+        [X] _ [__]
+           | |
+           | |
+       [__][__][__]
+    ~~~~~~~~~~~~~~~~
+
+
+    rising water. delay by building platforms and buildings
+        rain starts raining as a warning of water level rising. 
+        water then raises by a large amount. 
+        So you have to have prepared.
+        prepare by building upwards with materials.
+        collect materials when it is not raining.
+        growing trees maybe? for wood materials?
+        growing rocks? you know. like a normal thing to do.
+        maybe have food and thirst.
+        starts with a ton of resources but as you go up you have less resources.
+        making a building game sounds miseriable tho.
+
+
+
+
 Ideas:
 
     Spread Lights (Fire) from torch to torch, until they all burn out.

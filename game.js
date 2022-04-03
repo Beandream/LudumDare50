@@ -14,29 +14,39 @@ var stars, score = 0, scoreText, bombs, gameOver;
 function create() {
     const cursors = this.input.keyboard.createCursorKeys();
 
-    let sky = this.add.image(400, 300, 'sky').setInteractive();
+    let sky = this.add.image(400, 300, 'sky').setInteractive().setScrollFactor(0);
 
     platforms.init(this, cursors, "platforms");
-    platforms.create(400, 568, { scale: 2 });
-    platforms.create(600, 400);
-    platforms.create(50, 250);
-    platforms.create(750, 220);
+    platforms.create(360, 700);
+    platforms.create(600, 400, {type: 1});
+    platforms.create(50, 250, {type: 1});
+    platforms.create(750, 220, {type: 2});
 
     sky.on('pointerup', function (pointer) {
-        console.log(pointer);
+        platforms.setHighlight(false);
+        let type = 0;
         let size = Math.abs(pointer.downX - pointer.upX);
-        size = size / 100;
-        if (size < 0.1) size = 0.1;
+        if (size < 50) type = 0;
+        if (size > 50) type = 1;
+        if (size > 100) type = 2;
 
-        platforms.create(pointer.x, pointer.y, { scale: size });
+
+        platforms.create(pointer.worldX, pointer.worldY, { type: type });
+
+    }, this);
+
+    sky.on('pointerdown', function (pointer) {
+        platforms.setHighlight(true, pointer);
 
     }, this);
 
     player.init(this, cursors, "player");
-    player.create(100, 450, { gravity: 3200 });
+    player.create(350, 450, { gravity: 3200 });
 
     this.physics.add.collider(player.sprite, platforms.sprites);
 
+    this.cameras.main.setSize(800, 600);
+    this.cameras.main.startFollow(player.sprite);
 
     stars = this.physics.add.group({
         key: 'star',
@@ -58,6 +68,7 @@ function create() {
     }
 
     scoreText = this.add.text(16, 16, 'score: 0', { fontSize: '32px', fill: '#000' });
+    scoreText.setScrollFactor(0);
 
 
     function collectStar(p, star) {
@@ -106,4 +117,5 @@ function create() {
 
 function update() {
     player.update();
+    platforms.update();
 }
