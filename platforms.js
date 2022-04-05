@@ -8,7 +8,6 @@ export class Platforms {
             this.sprites = scene.physics.add.staticGroup();
 
             this.highlightBlock = scene.add.image(300, 700, 'platformSquare').setOrigin(0, 0);
-            console.log(this.highlightBlock);
             this.highlightBlock.setVisible(false);
         }
 
@@ -20,7 +19,7 @@ export class Platforms {
 
 
             let sprite = this.sprites.create(xGrid * 75, yGrid * 75, textureTypes[props.type ? props.type : 0]);
-            sprite.setScale(props.scale ? props.scale : 1);
+            // sprite.setScale(props.scale ? props.scale : 1);
             sprite.setInteractive();
             sprite.setOrigin(0, 0);
             sprite.refreshBody();

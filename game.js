@@ -15,6 +15,9 @@ function create() {
     const cursors = this.input.keyboard.createCursorKeys();
 
     let sky = this.add.image(400, 300, 'sky').setInteractive().setScrollFactor(0);
+    let water = this.physics.add.sprite(400, 1000, 'water').setScale(10, 1).refreshBody();
+    water.body.setAllowGravity(false);
+
 
     platforms.init(this, cursors, "platforms");
     platforms.create(360, 700);
@@ -62,6 +65,14 @@ function create() {
 
     this.physics.add.collider(stars, platforms.sprites);
     this.physics.add.overlap(player.sprite, stars, collectStar, null, this);
+
+    this.physics.add.overlap(player.sprite, water, hitWater, null, this);
+
+    function hitWater(player, water) {
+        console.log("hit water");
+        this.scene.restart();
+    }
+
 
     function collectStar(player, star) {
         star.disableBody(true, true);
@@ -113,6 +124,13 @@ function create() {
 
         gameOver = true;
     }
+
+    let button = this.add.image(770, 30, 'white').setInteractive().setScrollFactor(0);
+    button.on('pointerup', function (pointer) {
+        water.y -= 10;
+        water.refreshBody();
+    }, this);
+
 }
 
 function update() {

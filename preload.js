@@ -10,6 +10,10 @@ export function Preload() {
         { frameWidth: 32, frameHeight: 48 }
     );
 
+    this.load.image("water", demoSrc + 'assets/skies/underwater2.png');
+    this.load.image("white", demoSrc + 'assets/sprites/50x50-white.png');
+
+
     this.load.image('platformWide', './assets/PlatformTestWide.png');
     this.load.image('platformTall', './assets/PlatformTestTall.png');
     this.load.image('platformSquare', './assets/PlatformTestSquare.png');
