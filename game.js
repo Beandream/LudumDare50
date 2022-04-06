@@ -2,6 +2,7 @@ import { Setup } from "./config.js";
 import { Preload } from "./preload.js";
 import { Player } from "./player.js";
 import { Platforms } from "./platforms.js";
+import { Buttons } from "./components/ui/buttons.js";
 
 
 const game = Setup(Preload, create, update)
@@ -9,21 +10,22 @@ const game = Setup(Preload, create, update)
 const player = new Player();
 const platforms = new Platforms();
 
-var stars, score = 0, scoreText, bombs, gameOver;
+var stars, score = 0, scoreText, bombs, gameOver, water;
 
 function create() {
     const cursors = this.input.keyboard.createCursorKeys();
+    const buttons = new Buttons(this, "buttons");
 
     let sky = this.add.image(400, 300, 'sky').setInteractive().setScrollFactor(0);
-    let water = this.physics.add.sprite(400, 1000, 'water').setScale(10, 1).refreshBody();
+    water = this.physics.add.sprite(400, 1000, 'water').setScale(10, 1).refreshBody();
     water.body.setAllowGravity(false);
 
 
     platforms.init(this, cursors, "platforms");
     platforms.create(360, 700);
-    platforms.create(600, 400, {type: 1});
-    platforms.create(50, 250, {type: 1});
-    platforms.create(750, 220, {type: 2});
+    platforms.create(600, 400, { type: 1 });
+    platforms.create(50, 250, { type: 1 });
+    platforms.create(750, 220, { type: 2 });
 
     sky.on('pointerup', function (pointer) {
         platforms.setHighlight(false);
@@ -125,15 +127,24 @@ function create() {
         gameOver = true;
     }
 
-    let button = this.add.image(770, 30, 'white').setInteractive().setScrollFactor(0);
-    button.on('pointerup', function (pointer) {
+    let raiseWater = () => {
         water.y -= 10;
         water.refreshBody();
-    }, this);
+    }
+
+    buttons.create(770, 30, 'button1', { texture: "white", onClick: raiseWater });
+
 
 }
 
 function update() {
-    player.update();
+
+    if ((water.y - player.sprite.y) > 400) {
+        water.y -= 0.1;
+        water.refreshBody();
+    }
+
+
+    player.update(this.input.activePointer);
     platforms.update();
 }

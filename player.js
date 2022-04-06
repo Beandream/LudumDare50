@@ -1,3 +1,4 @@
+import { Square } from "./components/items/square.js";
 export class Player {
     constructor() {
         this.init = (scene, cursors, id) => {
@@ -31,9 +32,19 @@ export class Player {
                 frameRate: 10,
                 repeat: -1
             });
+            let square = new Square(this.scene, "square1");
+            square.init(400, 550, this.sprite.x, this.sprite.y);
+            this.hand = square;
         }
+        this.inventory = [];
 
-        this.update = () => {
+        this.update = (pointer) => {
+
+            if (this.hand) {
+                this.hand.active = true;
+                this.hand.update(this.sprite.x, this.sprite.y, pointer);
+            }
+
             if (this.cursors.left.isDown) {
                 this.sprite.setVelocityX(-360);
 
