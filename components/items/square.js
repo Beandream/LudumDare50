@@ -1,12 +1,13 @@
 export class Square {
-    constructor(scene, id) {
+    constructor(scene, id, amount) {
         this.scene = scene;
         this.id = id;
         this.itemTexture = 'block';
         this.blockTexture = 'block';
         this.type = "block";
+        this.amount = amount;
 
-        this.init = (x, y, px, py) => {
+        this.init = (x, y, px, py, amount) => {
             this.item = this.scene.add.image(px, py, this.itemTexture).setScale(0.2);
             this.uiHand = this.scene.add.image(x, y, this.itemTexture).setScale(0.5).setScrollFactor(0);
             this.uiAction = this.scene.add.image(px, py, this.itemTexture).setScale(0.75).setAlpha(0.5).setOrigin(0, 0);
@@ -27,9 +28,13 @@ export class Square {
 
         this.use = (x, y, pointer) => {
             this.scene.platforms.create(pointer.worldX, pointer.worldY, { texture: this.blockTexture, scale: 0.75 });
+            this.amount -= 1;
         }
 
         this.disable = () => {
+            this.item.destroy();
+            this.uiHand.destroy();
+            this.uiAction.destroy();
             //disble stuff idk?
         }
     }

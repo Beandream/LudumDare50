@@ -12,8 +12,8 @@ export class Inventory {
 
         this.hand = null
 
-        this.switchHandItem = (item) => {
-            InventoryManager.switchHandItem(this, item);
+        this.switchHandItem = (index) => {
+            InventoryManager.switchHandItem(this, this.blocks[index], index);
         }
         this.collectItem = (item) => {
             InventoryManager.collectItem(this, item);

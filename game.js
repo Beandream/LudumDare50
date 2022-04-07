@@ -72,8 +72,10 @@ function create() {
 
     this.physics.add.overlap(player.sprite, water, hitWater, null, this);
 
-    function hitWater(player, water) {
+    function hitWater(p, water) {
         console.log("hit water");
+        console.log(player);
+        player.reset();
         this.scene.restart();
     }
 
@@ -134,7 +136,14 @@ function create() {
         water.refreshBody();
     }
 
+
+    function holdItem() {
+        if (!player.inventory.hand) player.inventory.switchHandItem(0);
+    }
+
     buttons.create(770, 30, 'button1', { texture: "white", onClick: raiseWater });
+    buttons.create(700, 30, 'button2', { texture: "block", scale: 0.5, onClick: holdItem });
+
 
 
 }

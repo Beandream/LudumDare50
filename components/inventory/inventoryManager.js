@@ -13,13 +13,21 @@ export const InventoryManager = {
         //such as blocks
         if (!inventory.hand) return
         inventory.hand.use(playerX, playerY, pointer);
+        if (inventory.hand.amount < 1) {
+            let inventoryType = getInventoryType(inventory, inventory.hand)
+            inventoryType.splice(inventoryType.indexOf(inventory.hand), 1);
+            inventory.hand.disable();
+            inventory.hand = null;
+        }
+        console.log(inventory);
     },
     dropItem: (inventory, item) => {
         //remove from inventory and place item entity in world
     },
-    switchHandItem: (inventory, item) => {
+    switchHandItem: (inventory, item, index) => {
         if (inventory.hand) inventory.hand.disable(); //remove old hand item first
         //put item in hand
+        if (!item) return;
         inventory.hand = item;
         inventory.hand.init(400, 550, 400, 300)
     },
@@ -29,8 +37,12 @@ export const InventoryManager = {
     }
 }
 
-function getInventoryType (inventory, item) {
+function getInventoryType(inventory, item) {
     if (item.type === "block") return inventory.blocks;
     if (item.type === "tool") return inventory.tools;
     if (item.type === "material") return inventory.materials;
+}
+
+function removeFromInventory() {
+
 }
