@@ -1,4 +1,5 @@
 import { Square } from "./components/items/square.js";
+import { Inventory } from "./components/inventory/inventory.js";
 export class Player {
     constructor() {
         this.init = (scene, cursors, id) => {
@@ -32,18 +33,23 @@ export class Player {
                 frameRate: 10,
                 repeat: -1
             });
-            let square = new Square(this.scene, "square1");
-            square.init(400, 550, this.sprite.x, this.sprite.y);
-            this.hand = square;
+            // let square = new Square(this.scene, "square1");
+            // square.init(400, 550, this.sprite.x, this.sprite.y);
+            // this.hand = square;
+
+            this.inventory.collectItem(new Square(this.scene, "square3"));
+            this.inventory.switchHandItem(this.inventory.blocks[0]);
         }
-        this.inventory = [];
+
+        this.useItem = (pointer) => {
+            this.inventory.useItem(this.sprite.x, this.sprite.y, pointer);
+        }
+
+        this.inventory = new Inventory(this.scene, "playerInventory");
 
         this.update = (pointer) => {
 
-            if (this.hand) {
-                this.hand.active = true;
-                this.hand.update(this.sprite.x, this.sprite.y, pointer);
-            }
+            this.inventory.update(this.sprite.x, this.sprite.y, pointer);
 
             if (this.cursors.left.isDown) {
                 this.sprite.setVelocityX(-360);

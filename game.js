@@ -21,6 +21,8 @@ function create() {
     water.body.setAllowGravity(false);
 
 
+
+    this.platforms = platforms;
     platforms.init(this, cursors, "platforms");
     platforms.create(360, 700);
     platforms.create(600, 400, { type: 1 });
@@ -28,22 +30,22 @@ function create() {
     platforms.create(750, 220, { type: 2 });
 
     sky.on('pointerup', function (pointer) {
-        platforms.setHighlight(false);
-        let type = 0;
-        let size = Math.abs(pointer.downX - pointer.upX);
-        if (size < 50) type = 0;
-        if (size > 50) type = 1;
-        if (size > 100) type = 2;
+        // platforms.setHighlight(false);
+        // let type = 0;
+        // let size = Math.abs(pointer.downX - pointer.upX);
+        // if (size < 50) type = 0;
+        // if (size > 50) type = 1;
+        // if (size > 100) type = 2;
 
 
-        platforms.create(pointer.worldX, pointer.worldY, { type: type });
-
+        // platforms.create(pointer.worldX, pointer.worldY, { type: type });
+        player.useItem(pointer);
     }, this);
 
-    sky.on('pointerdown', function (pointer) {
-        platforms.setHighlight(true, pointer);
+    // sky.on('pointerdown', function (pointer) {
+    //     platforms.setHighlight(true, pointer);
 
-    }, this);
+    // }, this);
 
     player.init(this, cursors, "player");
     player.create(350, 450, { gravity: 3200 });

@@ -3,7 +3,8 @@ export class Square {
         this.scene = scene;
         this.id = id;
         this.itemTexture = 'block';
-        this.active = false;
+        this.blockTexture = 'block';
+        this.type = "block";
 
         this.init = (x, y, px, py) => {
             this.item = this.scene.add.image(px, py, this.itemTexture).setScale(0.2);
@@ -13,8 +14,6 @@ export class Square {
 
 
         this.update = (x, y, pointer) => {
-            if (!this.active) return  //do passive item thing
-
             this.item.x = x;
             this.item.y = y;
 
@@ -22,14 +21,16 @@ export class Square {
                 let xGrid = Math.floor(pointer.worldX / 75);
                 let yGrid = Math.floor(pointer.worldY / 75);
                 this.uiAction.x = xGrid * 75;
-                this.uiAction.y =yGrid * 75;
+                this.uiAction.y = yGrid * 75;
             }
         }
 
-        this.use = (action) => {
-            if (this.active) { //make sure we are holding it
-                console.log(action);
-            }
+        this.use = (x, y, pointer) => {
+            this.scene.platforms.create(pointer.worldX, pointer.worldY, { texture: this.blockTexture, scale: 0.75 });
+        }
+
+        this.disable = () => {
+            //disble stuff idk?
         }
     }
 }

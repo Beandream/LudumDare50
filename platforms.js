@@ -17,9 +17,10 @@ export class Platforms {
             let xGrid = Math.floor(x / 75);
             let yGrid = Math.floor(y / 75);
 
-
-            let sprite = this.sprites.create(xGrid * 75, yGrid * 75, textureTypes[props.type ? props.type : 0]);
-            // sprite.setScale(props.scale ? props.scale : 1);
+            let texture = textureTypes[props.type ? props.type : 0];
+            if (props.texture) texture = props.texture;
+            let sprite = this.sprites.create(xGrid * 75, yGrid * 75, texture);
+            sprite.setScale(props.scale ? props.scale : 1);
             sprite.setInteractive();
             sprite.setOrigin(0, 0);
             sprite.refreshBody();
