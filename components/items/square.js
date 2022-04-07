@@ -11,6 +11,7 @@ export class Square {
             this.item = this.scene.add.image(px, py, this.itemTexture).setScale(0.2);
             this.uiHand = this.scene.add.image(x, y, this.itemTexture).setScale(0.5).setScrollFactor(0);
             this.uiAction = this.scene.add.image(px, py, this.itemTexture).setScale(0.75).setAlpha(0.5).setOrigin(0, 0);
+            this.amountText = this.scene.add.text(x + 15, y - 45, this.amount, { fontSize: '32px', fill: '#000', fontStyle: 'bold', }).setScrollFactor(0);
         }
 
 
@@ -29,12 +30,14 @@ export class Square {
         this.use = (x, y, pointer) => {
             this.scene.platforms.create(pointer.worldX, pointer.worldY, { texture: this.blockTexture, scale: 0.75 });
             this.amount -= 1;
+            this.amountText.setText(this.amount);
         }
 
         this.disable = () => {
             this.item.destroy();
             this.uiHand.destroy();
             this.uiAction.destroy();
+            this.amountText.destroy();
             //disble stuff idk?
         }
     }

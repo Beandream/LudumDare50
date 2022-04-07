@@ -19,7 +19,6 @@ export const InventoryManager = {
             inventory.hand.disable();
             inventory.hand = null;
         }
-        console.log(inventory);
     },
     dropItem: (inventory, item) => {
         //remove from inventory and place item entity in world
@@ -27,9 +26,12 @@ export const InventoryManager = {
     switchHandItem: (inventory, item, index) => {
         if (inventory.hand) inventory.hand.disable(); //remove old hand item first
         //put item in hand
-        if (!item) return;
-        inventory.hand = item;
-        inventory.hand.init(400, 550, 400, 300)
+        if (!item) {
+            inventory.hand = null;
+        } else {
+            inventory.hand = item;
+            inventory.hand.init(400, 550, 400, 300)
+        }
     },
     update: (inventory, playerX, playerY, pointer) => {
         if (!inventory.hand) return

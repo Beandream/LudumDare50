@@ -56,12 +56,12 @@ export class Player {
 
             this.inventory.update(this.sprite.x, this.sprite.y, pointer);
 
-            if (this.cursors.left.isDown) {
+            if (this.cursors.left.isDown || this.cursors.left2.isDown) {
                 this.sprite.setVelocityX(-360);
 
                 this.sprite.anims.play('left', true);
             }
-            else if (this.cursors.right.isDown) {
+            else if (this.cursors.right.isDown|| this.cursors.right2.isDown) {
                 this.sprite.setVelocityX(360);
 
                 this.sprite.anims.play('right', true);
@@ -72,7 +72,7 @@ export class Player {
                 this.sprite.anims.play('turn');
             }
 
-            if (this.cursors.up.isDown) {
+            if (this.cursors.up.isDown || this.cursors.space.isDown || this.cursors.up2.isDown) {
                 if (this.sprite.body.touching.down) {
                     this.sprite.setVelocityY(-1000);
                 }

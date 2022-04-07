@@ -13,7 +13,11 @@ export class Inventory {
         this.hand = null
 
         this.switchHandItem = (index) => {
-            InventoryManager.switchHandItem(this, this.blocks[index], index);
+            if (index < 0) {
+                InventoryManager.switchHandItem(this, null, null);
+            } else {
+                InventoryManager.switchHandItem(this, this.blocks[index], index);
+            }
         }
         this.collectItem = (item) => {
             InventoryManager.collectItem(this, item);

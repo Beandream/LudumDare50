@@ -13,7 +13,8 @@ const platforms = new Platforms();
 var stars, score = 0, scoreText, bombs, gameOver, water;
 
 function create() {
-    const cursors = this.input.keyboard.createCursorKeys();
+    const cursors = { ...this.input.keyboard.createCursorKeys(), ...this.input.keyboard.addKeys({ up2: 'W', left2: 'A', down2: 'S', right2: 'D' }) };
+
     const buttons = new Buttons(this, "buttons");
 
     let sky = this.add.image(400, 300, 'sky').setInteractive().setScrollFactor(0);
@@ -74,7 +75,6 @@ function create() {
 
     function hitWater(p, water) {
         console.log("hit water");
-        console.log(player);
         player.reset();
         this.scene.restart();
     }
@@ -138,7 +138,11 @@ function create() {
 
 
     function holdItem() {
-        if (!player.inventory.hand) player.inventory.switchHandItem(0);
+        if (!player.inventory.hand) {
+            player.inventory.switchHandItem(0);
+        } else {
+            player.inventory.switchHandItem(-1);
+        }
     }
 
     buttons.create(770, 30, 'button1', { texture: "white", onClick: raiseWater });
@@ -150,10 +154,10 @@ function create() {
 
 function update() {
 
-    if ((water.y - player.sprite.y) > 400) {
-        water.y -= 0.1;
-        water.refreshBody();
-    }
+    // if ((water.y - player.sprite.y) > 400) {
+    //     water.y -= 0.1;
+    //     water.refreshBody();
+    // }
 
 
     player.update(this.input.activePointer);
