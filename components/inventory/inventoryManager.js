@@ -13,12 +13,11 @@ export const InventoryManager = {
         //such as blocks
         if (!inventory.hand) return
         inventory.hand.use(playerX, playerY, pointer);
-        if (inventory.hand.amount < 1) {
-            let inventoryType = getInventoryType(inventory, inventory.hand)
-            inventoryType.splice(inventoryType.indexOf(inventory.hand), 1);
-            inventory.hand.disable();
-            inventory.hand = null;
-        }
+        
+        let inventoryType = getInventoryType(inventory, inventory.hand)
+        inventoryType.splice(inventoryType.indexOf(inventory.hand), 1);
+        inventory.hand.disable();
+        inventory.hand = null;
     },
     dropItem: (inventory, item) => {
         //remove from inventory and place item entity in world

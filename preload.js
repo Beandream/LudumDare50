@@ -12,7 +12,7 @@ export function Preload() {
 
     this.load.image("water", demoSrc + 'assets/skies/underwater2.png');
     this.load.image("white", demoSrc + 'assets/sprites/50x50-white.png');
-    this.load.image("block", demoSrc + 'assets/sprites/block.png');
+    this.load.image("woodenBox", demoSrc + 'assets/sprites/block.png');
 
 
 

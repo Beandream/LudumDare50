@@ -1,8 +1,8 @@
-export class Square {
+export class WoodenBox {
     constructor(scene, id) {
         this.scene = scene;
         this.id = id;
-        this.texture = "platformSquare"
+        this.texture = "woodenBox"
         this.type = "block";
         this.defaults = {
             scale: 0.75

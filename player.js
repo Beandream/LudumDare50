@@ -1,5 +1,7 @@
-import { Square } from "./components/items/square.js";
 import { Inventory } from "./components/inventory/inventory.js";
+import { WoodenBox } from "./components/items/blocks/woodenBox.js";
+import { Square } from "./components/items/square.js";
+
 export class Player {
     constructor() {
         this.init = (scene, cursors, id) => {
@@ -37,9 +39,9 @@ export class Player {
             // square.init(400, 550, this.sprite.x, this.sprite.y);
             // this.hand = square;
 
-            this.inventory.collectItem(new Square(this.scene, "square3"));
-            this.inventory.collectItem(new Square(this.scene, "square4"));
-            this.inventory.collectItem(new Square(this.scene, "square5"));
+            this.inventory.collectItem(new WoodenBox(this.scene));
+            this.inventory.collectItem(new Square(this.scene));
+            this.inventory.collectItem(new WoodenBox(this.scene));
         }
 
         this.useItem = (pointer) => {
