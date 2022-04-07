@@ -1,43 +1,37 @@
 export class Square {
-    constructor(scene, id, amount) {
+    constructor(scene, id) {
         this.scene = scene;
         this.id = id;
-        this.itemTexture = 'block';
-        this.blockTexture = 'block';
+        this.texture = "block"
         this.type = "block";
-        this.amount = amount;
+        this.defaults = {
+            scale: 0.75
+        }
 
-        this.init = (x, y, px, py, amount) => {
-            this.item = this.scene.add.image(px, py, this.itemTexture).setScale(0.2);
-            this.uiHand = this.scene.add.image(x, y, this.itemTexture).setScale(0.5).setScrollFactor(0);
-            this.uiAction = this.scene.add.image(px, py, this.itemTexture).setScale(0.75).setAlpha(0.5).setOrigin(0, 0);
-            this.amountText = this.scene.add.text(x + 15, y - 45, this.amount, { fontSize: '32px', fill: '#000', fontStyle: 'bold', }).setScrollFactor(0);
+        this.init = (x, y, px, py) => {
+            // this.uiHand = this.scene.add.image(x, y, this.itemTexture).setScale(0.5).setScrollFactor(0);
+            // this.uiAction = this.scene.add.image(px, py, this.itemTexture).setScale(0.75).setAlpha(0.5).setOrigin(0, 0);
         }
 
 
         this.update = (x, y, pointer) => {
-            this.item.x = x;
-            this.item.y = y;
-
             if (pointer) {
-                let xGrid = Math.floor(pointer.worldX / 75);
-                let yGrid = Math.floor(pointer.worldY / 75);
-                this.uiAction.x = xGrid * 75;
-                this.uiAction.y = yGrid * 75;
+                this.scene.blocks.update(this);
             }
         }
 
         this.use = (x, y, pointer) => {
-            this.scene.platforms.create(pointer.worldX, pointer.worldY, { texture: this.blockTexture, scale: 0.75 });
-            this.amount -= 1;
-            this.amountText.setText(this.amount);
+            let props = {
+                texture: this.texture,
+                scale: this.defaults.scale
+            }
+            this.scene.blocks.create(pointer.worldX, pointer.worldY, props);
         }
 
         this.disable = () => {
-            this.item.destroy();
-            this.uiHand.destroy();
-            this.uiAction.destroy();
-            this.amountText.destroy();
+            this.scene.blocks.disable(this);
+            // this.uiHand.destroy();
+            // this.uiAction.destroy();
             //disble stuff idk?
         }
     }

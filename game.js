@@ -3,12 +3,14 @@ import { Preload } from "./preload.js";
 import { Player } from "./player.js";
 import { Platforms } from "./platforms.js";
 import { Buttons } from "./components/ui/buttons.js";
+import { Blocks } from "./components/ui/inventory/blocks.js";
 
 
 const game = Setup(Preload, create, update)
 
 const player = new Player();
 const platforms = new Platforms();
+const blocks = new Blocks();
 
 var stars, score = 0, scoreText, bombs, gameOver, water;
 
@@ -22,6 +24,10 @@ function create() {
     water.body.setAllowGravity(false);
 
 
+
+    blocks.init(this, "blocks");
+
+    console.log(this);
 
     this.platforms = platforms;
     platforms.init(this, cursors, "platforms");
@@ -162,4 +168,5 @@ function update() {
 
     player.update(this.input.activePointer);
     platforms.update();
+    // blocks.update();
 }

@@ -37,9 +37,9 @@ export class Player {
             // square.init(400, 550, this.sprite.x, this.sprite.y);
             // this.hand = square;
 
-            this.inventory.collectItem(new Square(this.scene, "square3", 3));
-            this.inventory.collectItem(new Square(this.scene, "square4", 4));
-            this.inventory.collectItem(new Square(this.scene, "square5", 5));
+            this.inventory.collectItem(new Square(this.scene, "square3"));
+            this.inventory.collectItem(new Square(this.scene, "square4"));
+            this.inventory.collectItem(new Square(this.scene, "square5"));
         }
 
         this.useItem = (pointer) => {
