@@ -5,7 +5,7 @@ export class Square {
         this.texture = "platformSquare"
         this.type = "block";
         this.defaults = {
-            scale: 0.75
+            scale: 1
         }
 
         this.init = (x, y, px, py) => {
@@ -25,7 +25,7 @@ export class Square {
             this.scene.blocks.create(pointer.worldX, pointer.worldY, props);
         }
 
-        this.disable = () => {
+        this.disableHighlight = () => {
             this.scene.blocks.disableHighlight(this);
         }
     }

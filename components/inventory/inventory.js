@@ -20,7 +20,6 @@ export class Inventory {
             }
         }
         this.collectItem = (item) => {
-            console.log(this);
             InventoryManager.collectItem(this, item);
         }
         this.craftItem = (item) => {

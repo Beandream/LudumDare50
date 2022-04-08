@@ -21,9 +21,11 @@ export class Blocks {
             block.setInteractive().setOrigin(0, 0).refreshBody();
 
             block.on('pointerup', function (pointer) {
-                //tell original sprite to disable itself
-
-                // sprite.disableBody(true, true);
+                if (props.inventory && props.newObject) {
+                    props.inventory.collectItem(props.newObject(this.scene, "newObj"));
+                    console.log(props.inventory);
+                }
+                block.disableBody(true, true);
             });
         }
 

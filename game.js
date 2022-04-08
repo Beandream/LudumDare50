@@ -6,7 +6,7 @@ import { Buttons } from "./components/ui/buttons.js";
 import { Blocks } from "./components/inventory/blocks.js";
 
 import { WoodenBox } from "./components/items/blocks/woodenBox.js";
-import { Square } from "./components/items/square.js";
+import { Square } from "./components/items/blocks/square.js";
 
 
 const game = Setup(Preload, create, update)

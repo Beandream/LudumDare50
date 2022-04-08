@@ -1,6 +1,6 @@
 import { Inventory } from "./components/inventory/inventory.js";
 import { WoodenBox } from "./components/items/blocks/woodenBox.js";
-import { Square } from "./components/items/square.js";
+import { Square } from "./components/items/blocks/square.js";
 
 export class Player {
     constructor() {
@@ -39,7 +39,7 @@ export class Player {
             // square.init(400, 550, this.sprite.x, this.sprite.y);
             // this.hand = square;
 
-            this.inventory.collectItem(new WoodenBox(this.scene));
+            // this.inventory.collectItem(new WoodenBox(this.scene));
             this.inventory.collectItem(new Square(this.scene));
             this.inventory.collectItem(new WoodenBox(this.scene));
         }

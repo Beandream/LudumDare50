@@ -12,11 +12,11 @@ export const InventoryManager = {
         //one time uses need to remove self
         //such as blocks
         if (!inventory.hand) return
-        inventory.hand.use(playerX, playerY, pointer);
-        
+        inventory.hand.use(playerX, playerY, pointer, inventory);
+
         let inventoryType = getInventoryType(inventory, inventory.hand)
         inventoryType.splice(inventoryType.indexOf(inventory.hand), 1);
-        inventory.hand.disable();
+        inventory.hand.disableHighlight();
         inventory.hand = null;
     },
     dropItem: (inventory, item) => {

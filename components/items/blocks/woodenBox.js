@@ -17,16 +17,22 @@ export class WoodenBox {
             }
         }
 
-        this.use = (x, y, pointer) => {
+        this.use = (x, y, pointer, inventory) => {
             let props = {
                 texture: this.texture,
-                scale: this.defaults.scale
+                scale: this.defaults.scale,
+                inventory,
+                newObject
             }
             this.scene.blocks.create(pointer.worldX, pointer.worldY, props);
         }
 
-        this.disable = () => {
+        this.disableHighlight = () => {
             this.scene.blocks.disableHighlight(this);
         }
     }
+}
+
+function newObject (scene, id) {
+    return new WoodenBox(scene, id)
 }
