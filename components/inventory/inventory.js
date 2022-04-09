@@ -6,29 +6,47 @@ export class Inventory {
         this.slotsAmount = slotsAmount;
         this.slots = setupSlots(slotsAmount);
 
-        this.addItem = (id, quantiy) => {
-            let emptyIndex = this.slots.findIndex(slot => slot.id === -1);
-            if (emptyIndex === -1 || quantiy < 1) return false // no empty slots, can't add item
+        this.addItem = (id, quantity) => {
+            let amount = quantity;
+            addToAvailableSpace(this.slots, id);
+            addToAvailableSpace(this.slots, -1);
 
-            this.slots[emptyIndex] = {
-                id,
-                quantiy
+            function addToAvailableSpace(slots, idMatch) {
+                slots.forEach(slot => {
+                    if (amount < 1) return;
+                    if (slot.id != idMatch) return
+
+                    let availableSpace = (64 - slot.quantity); //hardcoded 64
+                    if (availableSpace < 1) return
+
+                    if (availableSpace > amount) {
+                        //add amount
+                        slot.quantity += amount;
+                        slot.id = id;
+                        amount = 0;
+                    } else {
+                        //add available space
+                        slot.quantity += availableSpace;
+                        slot.id = id;
+                        amount -= availableSpace;
+                    }
+                })
             }
-
-            console.log(this.slots);
+            return amount;
         }
 
-        this.dropItem = (index, quantiy) => {
-            if (quantiy < 1) return false 
-            this.slot[index].quantiy -= quantiy;
+        this.dropItem = (index, quantity) => {
+            if (quantity < 1) return false
+            let id = this.slot[index].id;
+            this.slot[index].quantity -= quantity;
 
-            if (this.slots[index].quantiy < 1) {
+            if (this.slots[index].quantity < 1) {
                 this.slots[index] = {
                     id: -1,
-                    quantiy: -1,
+                    quantity: -1,
                 }
             }
-
+            return id
         }
     }
 }
@@ -38,7 +56,7 @@ function setupSlots(slotsAmount) {
     for (let i = 0; i < slotsAmount; i++) {
         slots[i] = {
             id: -1,
-            quantiy: -1,
+            quantity: -1,
         }
     }
     return slots;
