@@ -1,6 +1,4 @@
 import { Inventory } from "./components/inventory/inventory.js";
-import { WoodenBox } from "./components/items/blocks/woodenBox.js";
-import { Square } from "./components/items/blocks/square.js";
 
 export class Player {
     constructor() {
@@ -40,23 +38,21 @@ export class Player {
             // this.hand = square;
 
             // this.inventory.collectItem(new WoodenBox(this.scene));
-            this.inventory.collectItem(new Square(this.scene));
-            this.inventory.collectItem(new WoodenBox(this.scene));
+            console.log(this.inventory);
+            this.inventory.addItem(0, 10);
         }
 
         this.useItem = (pointer) => {
-            this.inventory.useItem(this.sprite.x, this.sprite.y, pointer);
+
         }
 
-        this.inventory = new Inventory(this.scene, "playerInventory");
+        this.inventory = new Inventory(this.scene, "playerInventory", 9);
 
         this.reset = () => {
-            this.inventory = new Inventory(this.scene, "playerInventory");
+            this.inventory = new Inventory(this.scene, "playerInventory", 9);
         }
 
         this.update = (pointer) => {
-
-            this.inventory.update(this.sprite.x, this.sprite.y, pointer);
 
             if (this.cursors.left.isDown || this.cursors.left2.isDown) {
                 this.sprite.setVelocityX(-360);
