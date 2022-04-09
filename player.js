@@ -6,6 +6,9 @@ export class Player {
             this.scene = scene;
             this.cursors = cursors;
             this.id = id;
+
+            this.inventory = new Inventory(this.scene, "playerInventory", 9);
+
         }
         this.create = (x, y, props = {}) => {
             this.sprite = this.scene.physics.add.sprite(x, y, 'dude');
@@ -44,16 +47,14 @@ export class Player {
             this.inventory.addItem(0, 20);
             this.inventory.addItem(1, 5);
             this.inventory.addItem(10, 5);
-            this.inventory.addItem(1, 256);
+            this.inventory.addItem(1, 120);
 
             this.inventory.dropItem(0, 64);
         }
 
         this.useItem = (pointer) => {
-
+            this.inventory.useItem(this.sprite.x, this.sprite.y, pointer);
         }
-
-        this.inventory = new Inventory(this.scene, "playerInventory", 9);
 
         this.reset = () => {
             this.inventory = new Inventory(this.scene, "playerInventory", 9);
@@ -61,12 +62,14 @@ export class Player {
 
         this.update = (pointer) => {
 
+            this.inventory.updateItem(this.sprite.x, this.sprite.y, pointer);
+
             if (this.cursors.left.isDown || this.cursors.left2.isDown) {
                 this.sprite.setVelocityX(-360);
 
                 this.sprite.anims.play('left', true);
             }
-            else if (this.cursors.right.isDown|| this.cursors.right2.isDown) {
+            else if (this.cursors.right.isDown || this.cursors.right2.isDown) {
                 this.sprite.setVelocityX(360);
 
                 this.sprite.anims.play('right', true);

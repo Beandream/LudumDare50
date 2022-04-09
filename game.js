@@ -2,12 +2,14 @@ import { Setup } from "./config.js";
 import { Preload } from "./preload.js";
 import { Player } from "./player.js";
 import { Platforms } from "./platforms.js";
-import { Buttons } from "./components/ui/buttons.js";
+import { Buttons } from "./components/ui/buttons.js"
+import { Blocks } from "./components/blocks.js";
 
 const game = Setup(Preload, create, update)
 
 const player = new Player();
 const platforms = new Platforms();
+const blocks =  new Blocks();
 
 var stars, score = 0, scoreText, bombs, gameOver, water;
 
@@ -20,7 +22,7 @@ function create() {
     water = this.physics.add.sprite(400, 1000, 'water').setScale(10, 1).refreshBody();
     water.body.setAllowGravity(false);
 
-
+    blocks.init(this, "blocks1");
 
     platforms.init(this, cursors, "platforms");
     platforms.create(300, 608, { scale: 1 });
@@ -39,6 +41,8 @@ function create() {
     player.create(350, 450, { gravity: 3200 });
 
     this.physics.add.collider(player.sprite, platforms.sprites);
+    this.physics.add.collider(player.sprite, blocks.sprites);
+
 
     this.cameras.main.setSize(800, 600);
     this.cameras.main.startFollow(player.sprite);
