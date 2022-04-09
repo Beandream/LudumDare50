@@ -1,4 +1,5 @@
-import { toGridPositions } from "../functions/toGridPositions.js";
+import { toGridPositions } from './functions/toGridPositions.js'
+
 export class Blocks {
     constructor() {
         this.init = (scene, id) => {
@@ -39,7 +40,7 @@ export class Blocks {
                 let pos = toGridPositions(this.scene.input.activePointer.worldX, this.scene.input.activePointer.worldY);
                 this.highlightBlock.setPosition(pos.x, pos.y);
                 this.highlightBlock.setTexture(block.texture)
-                this.highlightBlock.setScale(block.defaults.scale);
+                this.highlightBlock.setScale(block.scale);
                 this.highlightBlock.setVisible(true);
             }
         }

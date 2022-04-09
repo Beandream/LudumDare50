@@ -1,18 +1,15 @@
 import { Setup } from "./config.js";
 import { Preload } from "./preload.js";
 import { Player } from "./player.js";
-// import { Platforms } from "./platforms.js";
-import { Buttons } from "./components/ui/buttons.js";
-import { Blocks } from "./components/inventory/blocks.js";
-
-import { WoodenBox } from "./components/items/blocks/woodenBox.js";
-import { Square } from "./components/items/blocks/square.js";
-
+import { Platforms } from "./platforms.js";
+import { Buttons } from "./components/ui/buttons.js"
+import { Blocks } from "./components/blocks.js";
 
 const game = Setup(Preload, create, update)
 
 const player = new Player();
-const blocks = new Blocks();
+const platforms = new Platforms();
+const blocks =  new Blocks();
 
 var stars, score = 0, scoreText, bombs, gameOver, water;
 
@@ -25,13 +22,13 @@ function create() {
     water = this.physics.add.sprite(400, 1000, 'water').setScale(10, 1).refreshBody();
     water.body.setAllowGravity(false);
 
+    blocks.init(this, "blocks1");
 
-
-    blocks.init(this, "blocks");
-    blocks.create(360, 700, { texture: "woodenBox", scale: 0.75 });
-    blocks.create(600, 400, { texture: "woodenBox", scale: 0.75 });
-    blocks.create(50, 250, { texture: "woodenBox", scale: 0.75 });
-    blocks.create(750, 220, { texture: "woodenBox", scale: 0.75 });
+    platforms.init(this, cursors, "platforms");
+    platforms.create(300, 608, { scale: 1 });
+    platforms.create(600, 400);
+    platforms.create(50, 250);
+    platforms.create(750, 220);
 
     console.log(this);
 
@@ -43,7 +40,9 @@ function create() {
     player.init(this, cursors, "player");
     player.create(350, 450, { gravity: 3200 });
 
+    this.physics.add.collider(player.sprite, platforms.sprites);
     this.physics.add.collider(player.sprite, blocks.sprites);
+
 
     this.cameras.main.setSize(800, 600);
     this.cameras.main.startFollow(player.sprite);
@@ -60,7 +59,7 @@ function create() {
 
     });
 
-    this.physics.add.collider(stars, blocks.sprites);
+    this.physics.add.collider(stars, platforms.sprites);
     this.physics.add.overlap(player.sprite, stars, collectStar, null, this);
 
     this.physics.add.overlap(player.sprite, water, hitWater, null, this);
@@ -109,7 +108,7 @@ function create() {
 
     bombs = this.physics.add.group();
 
-    this.physics.add.collider(bombs, blocks.sprites);
+    this.physics.add.collider(bombs, platforms.sprites);
 
     this.physics.add.collider(player.sprite, bombs, hitBomb, null, this);
 
@@ -130,18 +129,13 @@ function create() {
 
 
     function holdItem() {
-        if (!player.inventory.hand) {
-            player.inventory.switchHandItem(0);
-        } else {
-            player.inventory.switchHandItem(-1);
-        }
     }
 
     buttons.create(770, 30, 'btnRaiseWater', { texture: "white", onClick: raiseWater });
     buttons.create(700, 30, 'btnHoldItem', { texture: "white", onClick: holdItem });
 
-    buttons.create(500, 30, 'btnGiveSquareItem', { texture: "white", onClick: () => {player.inventory.collectItem(new WoodenBox(this))} });
-    buttons.create(575, 30, 'btnGiveWoodenBoxItem', { texture: "white", onClick: () => {player.inventory.collectItem(new Square(this))} });
+    // buttons.create(500, 30, 'btnGiveSquareItem', { texture: "white", onClick: () => {}});
+    // buttons.create(575, 30, 'btnGiveWoodenBoxItem', { texture: "white", onClick: () => {}});
 
 }
 

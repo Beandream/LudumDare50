@@ -1,6 +1,7 @@
 export class Buttons {
     constructor(scene, id) {
         this.scene = scene;
+        scene.buttons = this;
         this.id = id;
         this.buttons = [];
         this.create = (x = 0, y = 0, id = "default", props = {}) => {
@@ -15,6 +16,7 @@ export class Buttons {
             }, this);
 
             this.buttons.push(button);
+            return button;
         }
     }
 }
