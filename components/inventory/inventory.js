@@ -30,7 +30,7 @@ export class Inventory {
 
         this.updateItem = (x, y, pointer) => {
 
-            this.hotbar.update(this, this.hotbar.buttons);
+            this.hotbar.update(this, this.hotbar.hotbarSlots);
 
 
             let slot = this.slots[this.handIndex]
