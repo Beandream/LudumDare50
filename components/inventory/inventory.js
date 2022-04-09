@@ -1,5 +1,7 @@
 import { Item } from "./item.js";
 import { getItemsById } from "./items.js";
+import { createInventoryUI } from "../ui/inventoryUI.js";
+
 
 export class Inventory {
     constructor(scene, id, slotsAmount) {
@@ -11,8 +13,14 @@ export class Inventory {
 
         this.handIndex = slotsAmount - 1;
 
-        this.useItem = (x, y, pointer) => {
+        this.hotbar = createInventoryUI(this.scene, this);
 
+        this.changeHandIndex = (index) => {
+            disableHand(this);
+            this.handIndex = index;
+        }
+
+        this.useItem = (x, y, pointer) => {
             let slot = this.slots[this.handIndex]
             if (slot.itemId > -1) {
                 let item = getItemsById(slot.itemId, this.scene);
@@ -21,6 +29,10 @@ export class Inventory {
         }
 
         this.updateItem = (x, y, pointer) => {
+
+            this.hotbar.update(this, this.hotbar.buttons);
+
+
             let slot = this.slots[this.handIndex]
             if (slot.itemId > -1) {
                 let item = getItemsById(slot.itemId, this.scene);
@@ -69,17 +81,21 @@ export class Inventory {
 
             this.slots[index].quantity -= amount;
             if (this.slots[index].quantity < 1) {
-
-                let slot = this.slots[index]
-                if (slot.itemId > -1) {
-                    let item = getItemsById(slot.itemId, this.scene);
-                    item.disable();
-                }
+                disableHand(this);
 
                 this.slots[index] = new Item(-1, -1);
             }
             return { itemId, quantity: amount, data } // the amount and type of item dropped
         }
+    }
+}
+
+function disableHand(inventory) {
+    let slot = inventory.slots[inventory.handIndex];
+
+    if (slot.itemId > -1) {
+        let item = getItemsById(slot.itemId, inventory.scene);
+        item.disable();
     }
 }
 

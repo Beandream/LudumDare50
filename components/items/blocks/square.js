@@ -1,32 +1,23 @@
-export class Square {
-    constructor(scene, id) {
-        this.scene = scene;
-        this.id = id;
-        this.texture = "platformSquare"
-        this.type = "block";
-        this.defaults = {
-            scale: 1
-        }
+export const Square = (scene) => {
+    const obj = {
+        texture: "platformSquare",
+        type: "block",
+        scale: 1,
 
-        this.init = (x, y, px, py) => {
-        }
-
-        this.update = (x, y, pointer) => {
+        updateItem: (x, y, pointer) => {
             if (pointer) {
-                this.scene.blocks.updateHighlight(this);
+                scene.blocks.updateHighlight(obj);
             }
-        }
+        },
 
-        this.use = (x, y, pointer) => {
-            let props = {
-                texture: this.texture,
-                scale: this.defaults.scale
-            }
-            this.scene.blocks.create(pointer.worldX, pointer.worldY, props);
-        }
+        disable: () => {
+            scene.blocks.disableHighlight(obj);
+        },
 
-        this.disableHighlight = () => {
-            this.scene.blocks.disableHighlight(this);
+        useItem: (x, y, pointer, invetory, slotIndex) => {
+            scene.blocks.create(pointer.worldX, pointer.worldY, { texture: obj.texture, scale: obj.scale });
+            invetory.dropItem(slotIndex, 1);
         }
     }
+    return obj
 }

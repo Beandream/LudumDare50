@@ -134,8 +134,8 @@ function create() {
     buttons.create(770, 30, 'btnRaiseWater', { texture: "white", onClick: raiseWater });
     buttons.create(700, 30, 'btnHoldItem', { texture: "white", onClick: holdItem });
 
-    buttons.create(500, 30, 'btnGiveSquareItem', { texture: "white", onClick: () => {}});
-    buttons.create(575, 30, 'btnGiveWoodenBoxItem', { texture: "white", onClick: () => {}});
+    // buttons.create(500, 30, 'btnGiveSquareItem', { texture: "white", onClick: () => {}});
+    // buttons.create(575, 30, 'btnGiveWoodenBoxItem', { texture: "white", onClick: () => {}});
 
 }
 
