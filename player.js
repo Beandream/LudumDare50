@@ -45,6 +45,8 @@ export class Player {
             this.inventory.addItem(1, 5);
             this.inventory.addItem(10, 5);
             this.inventory.addItem(1, 256);
+
+            this.inventory.dropItem(0, 64);
         }
 
         this.useItem = (pointer) => {

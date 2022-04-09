@@ -37,16 +37,20 @@ export class Inventory {
 
         this.dropItem = (index, quantity) => {
             if (quantity < 1) return false
-            let id = this.slot[index].id;
-            this.slot[index].quantity -= quantity;
+            let id = this.slots[index].id;
+            let availableAmount = this.slots[index].quantity;
 
+            let amount = (availableAmount < quantity) ? availableAmount : quantity;
+
+            this.slots[index].quantity -= amount;
             if (this.slots[index].quantity < 1) {
                 this.slots[index] = {
                     id: -1,
                     quantity: -1,
                 }
             }
-            return id
+            console.log("returned: " + id, amount);
+            return { id, quantity: amount }
         }
     }
 }
