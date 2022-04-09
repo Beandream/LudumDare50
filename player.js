@@ -11,7 +11,7 @@ export class Player {
 
         }
         this.create = (x, y, props = {}) => {
-            this.sprite = this.scene.physics.add.sprite(x, y, 'dude');
+            this.sprite = this.scene.physics.add.sprite(x, y, 'dude').setDepth(1);
             this.sprite.setBounce(0.1);
             // this.sprite.setCollideWorldBounds(true);
             this.sprite.body.setGravityY(300);

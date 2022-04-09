@@ -16,13 +16,18 @@ export class Inventory {
         this.hotbar = createInventoryUI(this.scene, this);
 
         this.changeHandIndex = (index) => {
-            disableHand(this);
-            this.handIndex = index;
+            if (index === this.handIndex) {
+                disableHand(this);
+                this.handIndex = -1;
+            } else {
+                disableHand(this);
+                this.handIndex = index;
+            }
         }
 
         this.useItem = (x, y, pointer) => {
             let slot = this.slots[this.handIndex]
-            if (slot.itemId > -1) {
+            if (slot?.itemId > -1) {
                 let item = getItemsById(slot.itemId, this.scene);
                 item.useItem(x, y, pointer, this, this.handIndex);
             }
@@ -34,7 +39,7 @@ export class Inventory {
 
 
             let slot = this.slots[this.handIndex]
-            if (slot.itemId > -1) {
+            if (slot?.itemId > -1) {
                 let item = getItemsById(slot.itemId, this.scene);
                 item.updateItem(x, y, pointer, this, this.handIndex);
             }
@@ -93,7 +98,7 @@ export class Inventory {
 function disableHand(inventory) {
     let slot = inventory.slots[inventory.handIndex];
 
-    if (slot.itemId > -1) {
+    if (slot?.itemId > -1) {
         let item = getItemsById(slot.itemId, inventory.scene);
         item.disable();
     }
