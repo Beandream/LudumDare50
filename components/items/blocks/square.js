@@ -3,6 +3,8 @@ export const Square = (scene) => {
         texture: "platformSquare",
         type: "block",
         scale: 1,
+        maxStackSize: 10,
+        itemId: 1,
 
         updateItem: (x, y, pointer) => {
             if (pointer) {
@@ -14,9 +16,9 @@ export const Square = (scene) => {
             scene.blocks.disableHighlight(obj);
         },
 
-        useItem: (x, y, pointer, invetory, slotIndex) => {
-            scene.blocks.create(pointer.worldX, pointer.worldY, { texture: obj.texture, scale: obj.scale });
-            invetory.dropItem(slotIndex, 1);
+        useItem: (x, y, pointer, inventory, slotIndex) => {
+            scene.blocks.create(pointer.worldX, pointer.worldY, { inventory, self: obj});
+            inventory.dropItem(slotIndex, 1);
         }
     }
     return obj

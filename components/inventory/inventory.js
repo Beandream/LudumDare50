@@ -11,7 +11,7 @@ export class Inventory {
         this.slotsAmount = slotsAmount;
         this.slots = setupSlots(slotsAmount);
 
-        this.handIndex = slotsAmount - 1;
+        this.handIndex = 0;
 
         this.hotbar = createInventoryUI(this.scene, this);
 
@@ -45,17 +45,18 @@ export class Inventory {
             }
         }
 
-        this.addItem = (itemId, quantity, data) => {
+        this.addItem = (itemId, quantity = 0, data) => {
             let amount = quantity;
-            addToAvailableSpace(this.slots, itemId);
-            addToAvailableSpace(this.slots, -1);
 
-            function addToAvailableSpace(slots, idMatch) {
+            let maxStackSize = getItemsById(itemId, this.scene).maxStackSize;
+            if (!(maxStackSize > 0)) maxStackSize = 1;
+
+            const addToAvailableSpace = (slots, idMatch) => {
                 slots.forEach(slot => {
                     if (amount < 1) return;
                     if (slot.itemId != idMatch) return
 
-                    let availableSpace = (64 - slot.quantity); //hardcoded 64, instead get amount from the id's max amount
+                    let availableSpace = (maxStackSize - slot.quantity); //hardcoded 64, instead get amount from the id's max amount
                     if (availableSpace < 1) return
 
                     if (availableSpace > amount) {
@@ -73,6 +74,11 @@ export class Inventory {
                     }
                 })
             }
+
+            addToAvailableSpace(this.slots, itemId); //first fill same type slots
+            addToAvailableSpace(this.slots, -1); // then fill empty slots
+
+            if (amount > 0) console.log("returned amount: " + amount);
             return amount; // the amount that didn't fit in inventory
         }
 
@@ -88,7 +94,7 @@ export class Inventory {
             if (this.slots[index].quantity < 1) {
                 disableHand(this);
 
-                this.slots[index] = new Item(-1, -1);
+                this.slots[index] = new Item(-1, 0);
             }
             return { itemId, quantity: amount, data } // the amount and type of item dropped
         }
@@ -107,7 +113,7 @@ function disableHand(inventory) {
 function setupSlots(slotsAmount) {
     let slots = [];
     for (let i = 0; i < slotsAmount; i++) {
-        slots[i] = new Item(-1, -1);
+        slots[i] = new Item(-1, 0);
     }
     return slots;
 }

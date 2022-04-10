@@ -16,15 +16,14 @@ export class Blocks {
         this.create = (x = 0, y = 0, props = {}) => {
             let pos = toGridPositions(x, y);
 
-            let block = this.sprites.create(pos.x, pos.y, props.texture ? props.texture : 'platformSquare');
+            let block = this.sprites.create(pos.x, pos.y, props.self.texture ? props.self.texture : 'platformSquare');
 
-            block.setScale(props.scale ? props.scale : 1);
+            block.setScale(props.self.scale ? props.self.scale : 1);
             block.setInteractive().setOrigin(0, 0).refreshBody();
 
             block.on('pointerup', function (pointer) {
-                if (props.inventory && props.newObject) {
-                    props.inventory.collectItem(props.newObject(this.scene, "newObj"));
-                    console.log(props.inventory);
+                if (props.inventory) {
+                    props.inventory.addItem(props.self.itemId, 1);
                 }
                 block.disableBody(true, true);
             });

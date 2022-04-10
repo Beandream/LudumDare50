@@ -42,14 +42,12 @@ export class Player {
 
             // this.inventory.collectItem(new WoodenBox(this.scene));
             console.log(this.inventory);
-            this.inventory.addItem(0, 256);
-            this.inventory.addItem(1, 10);
             this.inventory.addItem(0, 20);
-            this.inventory.addItem(1, 5);
+            this.inventory.addItem(1, 11);
             this.inventory.addItem(10, 5);
-            this.inventory.addItem(1, 120);
+            this.inventory.addItem(1, 1);
 
-            this.inventory.dropItem(0, 64);
+            // this.inventory.dropItem(0, 64);
         }
 
         this.useItem = (pointer) => {
