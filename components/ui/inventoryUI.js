@@ -11,7 +11,7 @@ export function createInventoryUI(scene, inventory) {
 
     let amount = (inventory.slotsAmount < 10) ? inventory.slotsAmount : 9;
 
-    scene.add.rectangle(centerX, y, xOffset * amount, 75, 0x66625f).setStrokeStyle(4, 0xefc53f).setScrollFactor(0);
+    scene.add.rectangle(centerX, y, xOffset * amount, 75, 0x66625f).setStrokeStyle(4, 0xefc53f).setScrollFactor(0).setDepth(10);
 
     for (let i = 0; i < amount; i++) {
         let xPos = centerX - ((xOffset * (amount - 1)) / 2);
@@ -19,8 +19,8 @@ export function createInventoryUI(scene, inventory) {
         let x = xPos + (xOffset * i)
 
         let btn = scene.buttons.create(x, y, 'inventory0', { texture: "woodenBox", scale: 0.5, onClick: () => { changeHandIndex(inventory, i) } });
-        let textBG = scene.add.rectangle(x + 19, y - 21, 30, 25, 0xFFFFFF).setStrokeStyle(1, 0x000).setScrollFactor(0);
-        let text = scene.add.text(x + 5, y - 33, '0', { fontSize: '24px', fontStyle: 'bold', fill: '#000' }).setScrollFactor(0);
+        let textBG = scene.add.rectangle(x + 19, y - 21, 30, 25, 0xFFFFFF).setStrokeStyle(1, 0x000).setScrollFactor(0).setDepth(10);
+        let text = scene.add.text(x + 5, y - 33, '0', { fontSize: '24px', fontStyle: 'bold', fill: '#000' }).setScrollFactor(0).setDepth(10);;
 
         hotbarSlots.push({ btn, text, textBG });
     }

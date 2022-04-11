@@ -1,10 +1,10 @@
-export const WoodenBox = (scene) => {
+export const WoodenBoxA = (scene) => {
     const obj = {
-        texture: "woodenBox",
+        texture: "woodenBoxA",
         type: "block",
-        scale: 0.8,
+        scale: 1.2,
         maxStackSize: 10,
-        itemId: 0,
+        itemId: 2,
 
         updateItem: (x, y, pointer) => {
             if (pointer) {

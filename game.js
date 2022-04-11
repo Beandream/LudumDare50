@@ -4,12 +4,13 @@ import { Player } from "./player.js";
 import { Platforms } from "./platforms.js";
 import { Buttons } from "./components/ui/buttons.js"
 import { Blocks } from "./components/blocks.js";
+import { getLevel1 } from "./components/world/level1.js";
 
 const game = Setup(Preload, create, update)
 
 const player = new Player();
 const platforms = new Platforms();
-const blocks =  new Blocks();
+const blocks = new Blocks();
 
 var stars, score = 0, scoreText, bombs, gameOver, water;
 
@@ -25,10 +26,15 @@ function create() {
     blocks.init(this, "blocks1");
 
     platforms.init(this, cursors, "platforms");
-    platforms.create(300, 608, { scale: 1 });
-    platforms.create(600, 400);
-    platforms.create(50, 250);
-    platforms.create(750, 220);
+
+    let level = getLevel1();
+
+    level.forEach(block => {
+        platforms.create(block.x, block.y, { texture: "woodenBox", scale: 0.8 });
+    })
+    // platforms.create(300, 608, { scale: 1 });
+    // platforms.create(50, 250);
+    // platforms.create(750, 220);
 
     console.log(this);
 

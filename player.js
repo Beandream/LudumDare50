@@ -11,7 +11,7 @@ export class Player {
 
         }
         this.create = (x, y, props = {}) => {
-            this.sprite = this.scene.physics.add.sprite(x, y, 'dude');
+            this.sprite = this.scene.physics.add.sprite(x, y, 'dude').setDepth(1);
             this.sprite.setBounce(0.1);
             // this.sprite.setCollideWorldBounds(true);
             this.sprite.body.setGravityY(300);
@@ -42,14 +42,13 @@ export class Player {
 
             // this.inventory.collectItem(new WoodenBox(this.scene));
             console.log(this.inventory);
-            this.inventory.addItem(0, 256);
-            this.inventory.addItem(1, 10);
             this.inventory.addItem(0, 20);
-            this.inventory.addItem(1, 5);
+            this.inventory.addItem(1, 11);
+            this.inventory.addItem(2, 11);
             this.inventory.addItem(10, 5);
-            this.inventory.addItem(1, 120);
+            this.inventory.addItem(1, 1);
 
-            this.inventory.dropItem(0, 64);
+            // this.inventory.dropItem(0, 64);
         }
 
         this.useItem = (pointer) => {
