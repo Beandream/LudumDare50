@@ -44,6 +44,7 @@ export class Player {
             console.log(this.inventory);
             this.inventory.addItem(0, 20);
             this.inventory.addItem(1, 11);
+            this.inventory.addItem(2, 11);
             this.inventory.addItem(10, 5);
             this.inventory.addItem(1, 1);
 
